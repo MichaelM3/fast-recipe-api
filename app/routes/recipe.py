@@ -10,3 +10,7 @@ router = APIRouter(
 @router.get("/")
 def get_all(db: Session = Depends(database.get_db)):
     return crud.get_all_recipes(db)
+
+@router.get("/{id}")
+def show_recipe(id: int, db: Session = Depends(database.get_db)):
+    return crud.show_recipe(id, db)
