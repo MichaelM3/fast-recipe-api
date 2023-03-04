@@ -24,7 +24,7 @@ class Recipe(Base):
     users = relationship("User", secondary="user_recipe_assocation_table", back_populates="recipes")
 
 user_recipe_assocation_table = Table("user_recipe_assocation_table", Base.metadata, 
-    Column("user_id", String(36), ForeignKey("user_id"), primary_key=True),
-    Column("recipe_id", String(36), ForeignKey("recipe_id"), primary_key=True)
+    Column("user_id", String(36), ForeignKey("users.id"), primary_key=True),
+    Column("recipe_id", String(36), ForeignKey("recipes.id"), primary_key=True)
 )
 
