@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import String, Column, ForeignKey, Table
+from sqlalchemy import Integer, String, Column, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -20,7 +20,7 @@ class Recipe(Base):
     title = Column(String(), nullable=False, index=True)
     summary = Column(String(), default="No summary given")
     image = Column(String(), default="")
-    spoonacularId = Column(String(), nullable=False)
+    spoonacularId = Column(Integer, nullable=False)
     users = relationship("User", secondary="user_recipe_assocation_table", back_populates="recipes")
 
 user_recipe_assocation_table = Table("user_recipe_assocation_table", Base.metadata, 
