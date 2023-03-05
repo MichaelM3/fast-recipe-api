@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from . import config, models
 from .database import engine
-from .routes import recipe
+from .routes import user, recipe, auth
 from .fetch_recipes import get_recipes
 
 models.Base.metadata.create_all(bind=engine)
@@ -26,7 +26,9 @@ app.add_middleware(
 def get_settings():
     return config.settings
 
+app.include_router(user.router)
 app.include_router(recipe.router)
+app.include_router(auth.router)
 
 @app.get("/search")
 async def search_recipe(ingredient: str):

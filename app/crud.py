@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from . import models
+
+from . import models, schemas
 
 def get_all_recipes(db: Session):
     recipes = db.query(models.Recipe).all()
@@ -14,3 +15,10 @@ def show_recipe(id: int, db: Session):
             detail="No recipe found with that id"
         )
     return recipe
+
+def create_user(req: schemas.UserCreate, db: Session):
+    new_user = models.User(username=req.username, email=req.email, password=req.password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
