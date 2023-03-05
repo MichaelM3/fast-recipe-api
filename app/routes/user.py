@@ -7,6 +7,3 @@ router = APIRouter(
     tags=["Users"]
 )
 
-@router.post("/")
-def create_user(req: schemas.UserCreate, db: Session = Depends(database.get_db)):
-    return crud.create_user(req, db)
