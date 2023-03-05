@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.routing import APIRoute
 from sqlalchemy.orm import Session
-from .. import models, schemas, database
+from .. import models, schemas, database, crud
 
 router = APIRouter(
         tags=["Authentication"]
@@ -14,3 +14,7 @@ def login(req: schemas.Login, db: Session = Depends(database.get_db)):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid username or password")
     return user
+
+@router.post("/register")
+def register(req: schemas.UserCreate, db: Session = Depends(database.get_db)):
+    return crud.create_user(req, db)
