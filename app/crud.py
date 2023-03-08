@@ -1,5 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
+from .hashing import Hash
 
 from . import models, schemas
 
@@ -17,7 +18,7 @@ def show_recipe(id: int, db: Session):
     return recipe
 
 def create_user(req: schemas.UserCreate, db: Session):
-    new_user = models.User(username=req.username, email=req.email, password=req.password)
+    new_user = models.User(username=req.username, email=req.email, password=Hash.bcrypt(req.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
