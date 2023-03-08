@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Integer, String, Column, ForeignKey, Table, null
+from sqlalchemy import Integer, String, Column, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -9,7 +9,7 @@ class User(Base):
     id = Column(String(36), primary_key=True, default=str(uuid.uuid4()), index=True)
     username = Column(String(15), unique=True, nullable=False, index=True)
     email = Column(String(50), unique=True, nullable=False)
-    password = Column(String(40), nullable=False)
+    password = Column(String(100), nullable=False)
     image = Column(String(200), nullable=True)
     recipes = relationship("Recipe", secondary="user_recipe_association_table", back_populates="users")
 
